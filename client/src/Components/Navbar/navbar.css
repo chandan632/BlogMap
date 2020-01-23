@@ -1,0 +1,40 @@
+.brand {
+  color: #2c3335 !important;
+  font-size: 25px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-style: italic;
+  padding: 0 20px;
+  text-decoration: underline;
+}
+
+.navlink {
+  color: #414040 !important;
+  text-decoration: none !important;
+  font-size: 15px;
+  font-weight: 450;
+  padding: 0 20px;
+  margin: 5px 20px;
+  cursor: pointer;
+}
+
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.addicon {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .formcontrol {
+    width: 70%;
+    padding: 5px 0;
+    margin-left: 20px;
+  }
+  .userhandle {
+    margin-left: -20px;
+  }
+}
