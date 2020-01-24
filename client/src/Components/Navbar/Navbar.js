@@ -17,10 +17,13 @@ class MyNavbar extends React.Component {
             return
         }
         const token = storedToken.replace("Bearer ", "")
-        const decodedData = jwt.verify(token, "dcdiuvc273457346344*&*&#%#*&%#&dsgviufgv")
-        if (!decodedData.exp > Date.now()) {
-            return
+        const decode = jwt.decode(token)
+        if (decode.exp < Date.now() / 1000) {
+            return this.setState({
+                logout: true
+            })
         }
+        const decodedData = jwt.verify(token, "dcdiuvc273457346344*&*&#%#*&%#&dsgviufgv")
         this.setState({
             name: decodedData.name
         })

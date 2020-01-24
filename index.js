@@ -9,6 +9,8 @@ const User = require("./model/Users")
 const signup = require("./routes/signup")
 const login = require("./routes/login")
 const requireToken = require("./middlewares/requireToken")
+const addblog = require("./routes/addblog")
+const home = require("./routes/home")
 
 const app = express()
 
@@ -26,6 +28,8 @@ app.use(cors())
 
 app.use(signup)
 app.use(login)
+app.use(addblog)
+app.use(home)
 
 app.get("/", requireToken, (req, res) => {
     console.log(req.user)

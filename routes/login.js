@@ -5,6 +5,7 @@ const User = require("./../model/Users")
 
 router.post("/login", async (req, res) => {
     try {
+        console.log(req.body)
         const email = req.body.email
         const password = req.body.password
         const userExists = await User.findOne({ email })
