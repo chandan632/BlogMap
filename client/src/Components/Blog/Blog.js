@@ -7,7 +7,21 @@ import { Redirect } from 'react-router-dom';
 
 class Blog extends React.Component {
     state = {
-        data: this.props.location.data
+        data: ''
+    }
+    componentDidMount() {
+        const storedblog = localStorage.getItem("blog")
+        if (!storedblog) {
+            localStorage.setItem("blog", JSON.stringify(this.props.location.data))
+            this.setState({
+                data: this.props.location.data
+            })
+        }
+        else {
+            this.setState({
+                data: JSON.parse(storedblog)
+            })
+        }
     }
     render() {
         return (

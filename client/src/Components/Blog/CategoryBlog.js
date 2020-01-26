@@ -3,22 +3,34 @@ import moment from 'moment';
 import './blog.css';
 import Navbar from './../Navbar/Navbar';
 import { Card } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 
 class Blog extends React.Component {
     state = {
         data: ''
     }
     componentDidMount() {
-        if (this.props.location.title) {
-            const title = this.props.location.title
-            fetch(`http://127.0.0.1:5002/categoryblog/${title}`, {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' }
+        const storedBlog = localStorage.getItem("blog")
+        if (!storedBlog) {
+            if (this.props.location.title) {
+                const title = this.props.location.title
+                fetch(`http://127.0.0.1:5002/categoryblog/${title}`, {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                    .then(res => res.json())
+                    .then(res => {
+                        localStorage.setItem("blog", JSON.stringify(res))
+                        this.setState({
+                            data: res
+                        })
+                    })
+                    .catch(err => console.log(err))
+            }
+        }
+        else {
+            this.setState({
+                data: JSON.parse(storedBlog)
             })
-                .then(res => res.json())
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
         }
     }
     render() {
@@ -26,7 +38,7 @@ class Blog extends React.Component {
             <>
                 <Navbar />
                 {
-                    this.state.data === undefined ? <Redirect to="/" />
+                    this.state.data === '' ? <p>No blog found</p>
                         :
                         <div className="d-flex justify-content-center">
                             <Card className="w-50 mt-3">

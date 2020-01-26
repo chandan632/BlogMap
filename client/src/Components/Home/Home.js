@@ -13,6 +13,10 @@ class Home extends React.Component {
     }
     componentDidMount() {
         const storedBlogs = localStorage.getItem("blogpost")
+        const storedblog = localStorage.getItem("blog")
+        if (storedblog) {
+            localStorage.removeItem("blog")
+        }
         if (!storedBlogs) {
             fetch("http://127.0.0.1:5002/home", {
                 method: "post",
