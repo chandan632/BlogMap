@@ -1,0 +1,27 @@
+.maincontainer {
+  width: 100%;
+  height: 100vh;
+  background-image: url("./../../assets/images/a.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0;
+}
+
+.subcontainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.hr {
+  width: 30%;
+  background-color: white !important;
+  height: 1px;
+}
+
+.contactdetails {
+  letter-spacing: 2px;
+}

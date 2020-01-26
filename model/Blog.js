@@ -29,6 +29,10 @@ const schema = new mongoose.Schema({
     author: {
         type: String,
         trim: true
+    },
+    name: {
+        type: String,
+        trim: true
     }
 })
 

@@ -1,0 +1,11 @@
+.cursor {
+  cursor: pointer;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.hovereffect:hover {
+  text-decoration: none !important;
+  text-decoration-style: none !important;
+  text-transform: none !important;
+}

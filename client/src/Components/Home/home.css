@@ -12,3 +12,16 @@
 .fontsize {
   font-size: 20px;
 }
+
+.hovereffect:hover {
+  text-decoration: none !important;
+  text-decoration-style: none;
+  text-transform: none;
+}
+
+.homebg {
+  background-image: url("./../../assets/images/c.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

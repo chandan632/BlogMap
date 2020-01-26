@@ -9,7 +9,8 @@ class MyNavbar extends React.Component {
     state = {
         name: '',
         isLoggedIn: false,
-        logout: false
+        logout: false,
+        data: ''
     }
     componentDidMount() {
         const storedToken = localStorage.getItem("auth_token")
@@ -25,7 +26,9 @@ class MyNavbar extends React.Component {
         }
         const decodedData = jwt.verify(token, "dcdiuvc273457346344*&*&#%#*&%#&dsgviufgv")
         this.setState({
-            name: decodedData.name
+            name: decodedData.name,
+            data: decodedData,
+            isLoggedIn: true
         })
     }
     logoutHandler = () => {
@@ -54,13 +57,13 @@ class MyNavbar extends React.Component {
                             <Button variant="outline-primary">Search</Button>
                         </Form>
                         {
-                            this.props.page === "addblog" ? null : <Link to="/addblog" className="navlink"><GoPlus className="addicon" /></Link>
+                            this.props.page === "addblog" || !this.state.isLoggedIn ? null : <Link to="/addblog" className="navlink"><GoPlus className="addicon" /></Link>
                         }
                         <Nav className="ml-lg-4 userhandle">
                             {
                                 this.state.name !== '' ?
                                     <>
-                                        <Nav.Item className="navlink">{this.state.name}</Nav.Item>
+                                        <Link to={{ pathname: '/profile', data: this.state.data }}><Nav.Item className="navlink">{this.state.name}</Nav.Item></Link>
                                         <Nav.Item className="navlink" onClick={this.logoutHandler}>Logout</Nav.Item>
                                     </> : <>
                                         <Nav.Item><Link to="login" className="navlink">Login</Link></Nav.Item>

@@ -5,7 +5,6 @@ const User = require("./../model/Users")
 
 router.post("/login", async (req, res) => {
     try {
-        console.log(req.body)
         const email = req.body.email
         const password = req.body.password
         const userExists = await User.findOne({ email })
@@ -13,7 +12,7 @@ router.post("/login", async (req, res) => {
 
         const checkPass = await bcrypt.compare(password, userExists.password)
         if (checkPass) {
-            const token = jwt.sign({ UserID: userExists._id, name: userExists.name, email }, process.env.SECRET_KEY, { expiresIn: 60 * 60 })
+            const token = jwt.sign({ UserID: userExists._id, name: userExists.name, email, phnumber: userExists.phnumber }, process.env.SECRET_KEY, { expiresIn: 60 * 60 })
             return res.send({ token })
         }
         else

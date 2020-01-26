@@ -4,16 +4,18 @@ import MyNavbar from './../Navbar/Navbar';
 import { Redirect } from 'react-router-dom';
 import { Container, Card, Form, Row, Col, Button, Alert } from 'react-bootstrap';
 
-export class Addblog extends Component {
+export class EditBlog extends Component {
     state = {
         title: '',
         category: '',
         visibility: '',
         content: '',
         tags: '',
+        id: '',
         error: false,
         success: false,
-        isLoogedIn: true
+        isLoogedIn: true,
+        idFound: true
     }
     componentDidMount() {
         const storedToken = localStorage.getItem("auth_token")
@@ -32,6 +34,37 @@ export class Addblog extends Component {
         this.setState({
             isLoogedIn: true
         })
+        let id = this.props.location.id
+        if (!id) {
+            return this.setState({
+                idFound: false
+            })
+        }
+        fetch(`http://127.0.0.1:5002/blogdetails/${id}`, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) {
+                    return this.setState({
+                        idFound: false
+                    })
+                }
+                this.setState({
+                    title: res.title,
+                    category: res.category,
+                    visibility: res.visibility,
+                    content: res.content,
+                    tags: res.tags,
+                    id: res._id
+                })
+            })
+            .catch(err => {
+                return this.setState({
+                    idFound: false
+                })
+            })
     }
     titleHandler = (event) => {
         this.setState({
@@ -66,7 +99,7 @@ export class Addblog extends Component {
             })
         }
         const token = localStorage.getItem('auth_token')
-        fetch("http://127.0.0.1:5002/addblog", {
+        fetch("http://127.0.0.1:5002/updateblog", {
             method: 'post',
             headers: { 'Content-Type': 'application/json', 'auth_token': token },
             body: JSON.stringify(this.state)
@@ -109,6 +142,9 @@ export class Addblog extends Component {
             <>
                 {
                     this.state.isLoogedIn ? null : <Redirect to="/login" />
+                }
+                {
+                    this.state.idFound ? null : <Redirect to="/" />
                 }
                 <MyNavbar page="addblog" />
                 <Container className="my-3">
@@ -158,9 +194,9 @@ export class Addblog extends Component {
                                     this.state.error ? <Alert variant="warning" className="w-lg-50 float-lg-left">Something went wrong !</Alert> : null
                                 }
                                 {
-                                    this.state.success ? <Alert variant="success" className="w-lg-50 float-lg-left">Blog created successfully !</Alert> : null
+                                    this.state.success ? <Alert variant="success" className="w-lg-50 float-lg-left">Blog Updated successfully !</Alert> : null
                                 }
-                                <Button type="submit" className="float-right">Create Post</Button>
+                                <Button type="submit" className="float-right">Update Post</Button>
                             </Form>
                         </Card.Body>
                     </Card>
@@ -170,4 +206,4 @@ export class Addblog extends Component {
     }
 }
 
-export default Addblog
+export default EditBlog

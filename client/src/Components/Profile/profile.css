@@ -1,0 +1,24 @@
+.profiletab {
+  background-color: #f8f9fa;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.nav-link {
+  color: #616c6f !important;
+}
+
+a.active {
+  background-color: black !important;
+  color: white !important;
+}
+
+.edit {
+  color: blue;
+  cursor: pointer;
+}
+
+.delete {
+  color: red;
+  cursor: pointer;
+}

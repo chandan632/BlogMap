@@ -7,6 +7,10 @@ import Login from './Components/Login/Login';
 import Signup from './Components/Signup/Signup';
 import NoMatch from './Components/NoMatch/NoMatch';
 import Addblog from './Components/Addblog/Addblog';
+import Blog from './Components/Blog/Blog';
+import Profile from './Components/Profile/Profile';
+import EditBlog from './Components/EditBlog/EditBlog';
+import CategoryBlog from './Components/Blog/CategoryBlog';
 
 function App() {
     return (
@@ -19,6 +23,10 @@ function App() {
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/addblog" component={Addblog} />
+                    <Route path="/blog" component={Blog} />
+                    <Route path="/profile" component={Profile} />
+                    <Route path="/edit" component={EditBlog} />
+                    <Route path="/categoryblog" component={CategoryBlog} />
                     <Route component={NoMatch} />
                 </Switch>
             </Router>

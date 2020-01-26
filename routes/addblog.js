@@ -15,7 +15,8 @@ router.post('/addblog', requireToken, async (req, res) => {
             visibility,
             content,
             tags,
-            author: req.user._id
+            author: req.user._id,
+            name: req.user.name
         })
         const savedBlog = await blog.save()
         res.send(savedBlog)
