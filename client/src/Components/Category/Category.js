@@ -142,7 +142,7 @@ export class Category extends Component {
                                     this.state.books.length > 0 ? <>
                                         {
                                             this.state.books.map((item, index) => {
-                                                return <Link key={index} className="hovereffect" to={{ pathname: "/categoryblog", title: `${item}` }}><p key={index}>{item}</p></Link>
+                                                return <Link key={index} className="hovereffect" to={{ pathname: "/categoryblog", title: `${item}` }}><p className="text-dark" key={index}>{item}</p></Link>
                                             })
                                         }
                                     </> : <Card.Text>No Blog Found For This Category</Card.Text>
@@ -158,7 +158,7 @@ export class Category extends Component {
                                     this.state.electronics.length > 0 ? <>
                                         {
                                             this.state.electronics.map((item, index) => {
-                                                return <Link key={index} className="hovereffect" to={{ pathname: "/categoryblog", title: `${item}` }}><p key={index}>{item}</p></Link>
+                                                return <Link key={index} className="hovereffect" to={{ pathname: "/categoryblog", title: `${item}` }}><p className="text-dark" key={index}>{item}</p></Link>
                                             })
                                         }
                                     </> : <Card.Text>No Blog Found For This Category</Card.Text>

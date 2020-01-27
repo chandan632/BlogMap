@@ -28,6 +28,20 @@
   cursor: pointer;
 }
 
+.searchbox {
+  position: absolute;
+  top: 50px;
+  left: 43%;
+  width: 30%;
+  z-index: 100;
+}
+
+.hovereffect:hover {
+  text-decoration: none !important;
+  text-decoration-style: none;
+  text-transform: none;
+}
+
 @media only screen and (max-width: 600px) {
   .formcontrol {
     width: 70%;

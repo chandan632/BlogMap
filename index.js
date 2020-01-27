@@ -18,6 +18,7 @@ const updateblog = require("./routes/updateblog")
 const tags = require("./routes/tags")
 const category = require("./routes/category")
 const categoryblog = require("./routes/categoryblog")
+const search = require("./routes/search")
 
 const app = express()
 
@@ -45,6 +46,7 @@ app.use(updateblog)
 app.use(tags)
 app.use(category)
 app.use(categoryblog)
+app.use(search)
 
 app.get("/", requireToken, (req, res) => {
     console.log(req.user)

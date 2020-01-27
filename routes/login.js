@@ -7,13 +7,19 @@ router.post("/login", async (req, res) => {
     try {
         const email = req.body.email
         const password = req.body.password
-        const userExists = await User.findOne({ email })
+        let userExists = await User.findOne({ email })
         if (!userExists) return res.send({ error: "User does't exists" })
 
         const checkPass = await bcrypt.compare(password, userExists.password)
         if (checkPass) {
             const token = jwt.sign({ UserID: userExists._id, name: userExists.name, email, phnumber: userExists.phnumber }, process.env.SECRET_KEY, { expiresIn: 60 * 60 })
-            return res.send({ token })
+            const user = {
+                UserID: userExists._id,
+                name: userExists.name,
+                email: userExists.email,
+                phnumber: userExists.phnumber
+            }
+            return res.send({ token, userExists: user })
         }
         else
             return res.send({ error: "User not found" })

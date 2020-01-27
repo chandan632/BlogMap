@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Form, Button } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, Card } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import { GoPlus } from 'react-icons/go';
@@ -10,7 +10,11 @@ class MyNavbar extends React.Component {
         name: '',
         isLoggedIn: false,
         logout: false,
-        data: ''
+        data: '',
+        search: '',
+        blogs: [],
+        searchTitle: [],
+        open: false
     }
     componentDidMount() {
         const storedToken = localStorage.getItem("auth_token")
@@ -30,6 +34,16 @@ class MyNavbar extends React.Component {
             data: decodedData,
             isLoggedIn: true
         })
+        fetch("http://127.0.0.1:5002/search", {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(res => res.json())
+            .then(res => {
+                this.setState({
+                    blogs: res.blogs
+                })
+            })
     }
     logoutHandler = () => {
         localStorage.removeItem('auth_token')
@@ -37,7 +51,41 @@ class MyNavbar extends React.Component {
             logout: true
         })
     }
+    inputHandler = (event) => {
+        this.setState({
+            search: event.target.value
+        })
+    }
+    oninputHandler = (event) => {
+        const text = event.target.value.trim().toLowerCase()
+        if (text) {
+            let title = []
+            this.state.blogs.forEach(blog => {
+                if (blog.title.toLowerCase().includes(text)) {
+                    title.push(blog.title)
+                }
+            })
+            this.setState({
+                searchTitle: [...new Set(title)],
+                open: true
+            })
+        }
+        else {
+            this.setState({
+                searchTitle: [],
+                open: true
+            })
+        }
+    }
+
     render() {
+        document.addEventListener("click", (e) => {
+            if (!e.target.classList.contains("search")) {
+                this.setState({
+                    open: false
+                })
+            }
+        })
         return (
             <>
                 {
@@ -52,9 +100,9 @@ class MyNavbar extends React.Component {
                             <Nav.Item ><Link to="/contact" className="navlink">Contact</Link></Nav.Item>
                             <Nav.Item ><Link to="about" className="navlink">About</Link></Nav.Item>
                         </Nav>
-                        <Form inline className="formcontrol mr-5">
-                            <Form.Control type="text" placeholder="search" className="ml-sm-2" />
-                            <Button variant="outline-primary">Search</Button>
+                        <Form inline className="formcontrol mr-5" onSubmit={this.formsubmitHandler}>
+                            <Form.Control type="text" value={this.state.search} onInput={this.oninputHandler} onChange={this.inputHandler} onClick={this.openHandler} placeholder="search" className="ml-sm-2" />
+                            <Button variant="outline-primary" type="submit">Search</Button>
                         </Form>
                         {
                             this.props.page === "addblog" || !this.state.isLoggedIn ? null : <Link to="/addblog" className="navlink"><GoPlus className="addicon" /></Link>
@@ -74,6 +122,24 @@ class MyNavbar extends React.Component {
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
+                {
+                    this.state.open ? <div className="searchbox  search">
+                        <Card className="search">
+                            <Card.Header className="text-center search">Title</Card.Header>
+                            <Card.Body className="search">
+                                {
+                                    this.state.searchTitle.length > 0 ? <>
+                                        {
+                                            this.state.searchTitle.map((title, index) => {
+                                                return <Link key={index} className="hovereffect text-dark search" to={{ pathname: "/categoryblog", title: `${title}` }}><p className="search">{title}</p></Link>
+                                            })
+                                        }
+                                    </> : <p className="search">No title found</p>
+                                }
+                            </Card.Body>
+                        </Card>
+                    </div> : null
+                }
             </>
         )
     }

@@ -42,6 +42,7 @@ class Login extends React.Component {
                 }
                 const token = "Bearer " + res.token
                 localStorage.setItem('auth_token', token)
+                localStorage.setItem("user", JSON.stringify(res.userExists))
                 this.setState({
                     allset: true
                 })
