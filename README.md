@@ -10,4 +10,4 @@
         BackEnd: NodeJS(Express)
         Database: MongoDB
         
-    project Live At: [BlogMap](https://chandanblogmap.herokuapp.com/)
+    project Live At: https://chandanblogmap.herokuapp.com/
